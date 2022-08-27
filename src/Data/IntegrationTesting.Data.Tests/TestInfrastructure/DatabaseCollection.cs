@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace IntegrationTesting.Repository.Tests.TestInfrastructure;
+namespace IntegrationTesting.Data.Tests.TestInfrastructure;
 
 [CollectionDefinition("Database collection")]
 public class DatabaseCollection : ICollectionFixture<DatabaseContainer>

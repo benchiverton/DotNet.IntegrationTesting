@@ -1,11 +1,12 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
-using IntegrationTesting.Repository.DTOs;
-using IntegrationTesting.Repository.Tests.TestInfrastructure;
+using IntegrationTesting.Data.DTOs;
+using IntegrationTesting.Data.Repositories;
+using IntegrationTesting.Data.Tests.TestInfrastructure;
 using Xunit;
 
-namespace IntegrationTesting.Repository.Tests;
+namespace IntegrationTesting.Data.Tests.Repositories;
 
 [Collection("Database collection")]
 public class BusinessEventRepositoryShould

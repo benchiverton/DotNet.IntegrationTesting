@@ -1,13 +1,12 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
-using IntegrationTesting.Repository.DTOs;
+using IntegrationTesting.Data.DTOs;
 using Microsoft.Data.SqlClient;
 
-namespace IntegrationTesting.Repository;
+namespace IntegrationTesting.Data.Repositories;
 
 public interface IBusinessEventRepository
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace IntegrationTesting.Repository.DTOs;
+namespace IntegrationTesting.Data.DTOs;
 
 public record BusinessEvent(
     Guid EventId,

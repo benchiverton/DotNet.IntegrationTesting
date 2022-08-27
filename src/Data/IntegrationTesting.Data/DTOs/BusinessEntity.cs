@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace IntegrationTesting.Repository.DTOs;
+namespace IntegrationTesting.Data.DTOs;
 
 public class BusinessEntity
 {

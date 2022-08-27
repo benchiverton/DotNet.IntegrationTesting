@@ -4,16 +4,16 @@ using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.SqlServer.Dac;
 
-namespace IntegrationTesting.Repository.Tests.TestInfrastructure;
+namespace IntegrationTesting.Data.Tests.TestInfrastructure;
 
 public class DatabaseContainer : IDisposable
 {
     private static readonly int HostPort = Random.Shared.Next(49152, 52000);
     private static readonly string DatabaseName = "ApplicationDatabase";
     private static readonly string SaLogin = "sa";
-    private static readonly string SaPassword = $"{Random.Shared.Next()}aA!";
+    private static readonly string SaPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
     private static readonly string DomainLoginUsername = "DomainLogin";
-    private static readonly string DomainLoginPassword = $"{Random.Shared.Next()}aA!";
+    private static readonly string DomainLoginPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
 
     private readonly TestcontainerDatabase _testContainer;
 
@@ -32,7 +32,7 @@ public class DatabaseContainer : IDisposable
         .Build();
         _testContainer.StartAsync().ContinueWith(e =>
         {
-            var dbPackage = DacPackage.Load("..\\..\\..\\..\\IntegrationTesting.Database\\bin\\Debug\\IntegrationTesting.Database.dacpac");
+            var dbPackage = DacPackage.Load("..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac");
             var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}");
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);

@@ -8,13 +8,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTesting.Repository", "Database\IntegrationTesting.Repository\IntegrationTesting.Repository.csproj", "{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{CE200542-18A6-4357-AC03-050FB500795F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTesting.Repository.Tests", "Database\IntegrationTesting.Repository.Tests\IntegrationTesting.Repository.Tests.csproj", "{56C501A1-3A75-4B5A-A21B-1FBF880702C5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTesting.Data", "Data\IntegrationTesting.Data\IntegrationTesting.Data.csproj", "{4FBD4BFD-862E-491B-9160-D4F7A237D6AC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{CE200542-18A6-4357-AC03-050FB500795F}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IntegrationTesting.Data.Sql", "Data\IntegrationTesting.Data.Sql\IntegrationTesting.Data.Sql.sqlproj", "{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "IntegrationTesting.Database", "Database\IntegrationTesting.Database\IntegrationTesting.Database.sqlproj", "{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTesting.Data.Tests", "Data\IntegrationTesting.Data.Tests\IntegrationTesting.Data.Tests.csproj", "{0EE50D74-0E5B-41A3-9943-03EEBF617606}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,28 +22,28 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152}.Release|Any CPU.Build.0 = Release|Any CPU
-		{56C501A1-3A75-4B5A-A21B-1FBF880702C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56C501A1-3A75-4B5A-A21B-1FBF880702C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56C501A1-3A75-4B5A-A21B-1FBF880702C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56C501A1-3A75-4B5A-A21B-1FBF880702C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FBD4BFD-862E-491B-9160-D4F7A237D6AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FBD4BFD-862E-491B-9160-D4F7A237D6AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FBD4BFD-862E-491B-9160-D4F7A237D6AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FBD4BFD-862E-491B-9160-D4F7A237D6AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0EE50D74-0E5B-41A3-9943-03EEBF617606}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE50D74-0E5B-41A3-9943-03EEBF617606}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE50D74-0E5B-41A3-9943-03EEBF617606}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE50D74-0E5B-41A3-9943-03EEBF617606}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{1AFF0CA5-C1F1-4AF9-8DFE-0D54E88F7152} = {CE200542-18A6-4357-AC03-050FB500795F}
-		{56C501A1-3A75-4B5A-A21B-1FBF880702C5} = {CE200542-18A6-4357-AC03-050FB500795F}
+		{4FBD4BFD-862E-491B-9160-D4F7A237D6AC} = {CE200542-18A6-4357-AC03-050FB500795F}
 		{AAE7662D-0A1D-498B-BABB-DDBC50BFB144} = {CE200542-18A6-4357-AC03-050FB500795F}
+		{0EE50D74-0E5B-41A3-9943-03EEBF617606} = {CE200542-18A6-4357-AC03-050FB500795F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7540E67A-1D0A-4BD1-B87F-401EB4FDCB0B}
