@@ -1,0 +1,8 @@
+CREATE TABLE [Domain].[BusinessEvent]
+(
+	[EventId] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY NONCLUSTERED,
+    [BusinessEntityId] UNIQUEIDENTIFIER NOT NULL INDEX IX_BusinessEvent_BusinessEntityId CLUSTERED,
+    [EventType] VARCHAR(50) NOT NULL,
+    [EventDetails] NVARCHAR(MAX) NOT NULL,
+    [CreatedUtc] DATETIME2 NOT NULL
+)
