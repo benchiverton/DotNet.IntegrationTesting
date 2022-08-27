@@ -1,6 +1,21 @@
 # DotNet Integration Testing
 
+Unit tests for code that has external dependencies in DotNet.
+
+## Areas covered
+
+| Area             | Details                                                    |
+| ---------------- | ---------------------------------------------------------- |
+| [Data](src/Data) | Unit testing app which ahs dependencies on SQL Server, etc |
+| API (TODO)       | Unit testing API's with all dependencies                   |
+
+## Build pipeline
+
+(WIP) The build pipeline uses GitHub actions, and does not require any pre-requisites - the docker images used are public and have all of the external dependencies needed.
+
 ## Pre-requisites
+
+Pre-requisites for running tests locally. Tests 
 
 ### Docker (Windows)
 1. Enable the Linux Subsystem feature (powershell, admin, may require restart)
