@@ -52,14 +52,15 @@
     sudo touch /etc/docker/daemon.json
     echo '{ "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"] }' | sudo tee -a /etc/docker/daemon.json
     ```
-2.  Start the docker service (todo - make docker auto-start)
+1.  Start the docker service (todo - make docker auto-start)
     ```powershell
     wsl
     ```
     ```bash
     sudo service docker start
     ```
-3.  Open a new command window and verify that your instillation was successful by running the following (powershell)
+1.  Open a new command window and verify that your instillation was successful by running the following (powershell)
     ```powershell
     wsl docker ps
     ```
+1.  **Important** - ensure the `DOCKER_HOST` environment variable is set to your mapped TCP port, which will be `tcp://localhost:2375/`

@@ -69,4 +69,10 @@
     <Build Include="Domain\Security\DomainLogin.sql" />
     <Build Include="Domain\Security\DomainUser.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="DomainLoginPassword">
+      <DefaultValue>Password</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
 </Project>
