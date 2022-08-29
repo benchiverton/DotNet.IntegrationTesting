@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     container: ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
     steps:
       - name: Checkout
