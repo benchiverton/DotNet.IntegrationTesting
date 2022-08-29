@@ -12,7 +12,7 @@ on:
 jobs:
   build-and-push-docker-image:
     name: Build sqltools docker image and push to GitHub package
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - name: Checkout code

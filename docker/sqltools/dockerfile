@@ -6,7 +6,7 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install .NET Core SDK
-ENV DOTNET_CORE_VERSION 5.0.400
+ENV DOTNET_CORE_VERSION 6.0.400
 
 RUN Invoke-WebRequest `
         -UseBasicParsing `
