@@ -25,8 +25,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build and push your image to Azure Container Registry 
-      - name: Build and Push container to ACR
+      - name: Build and Push image to Github Packages
         run: |
-          docker build --file=docker/sqltools/sockerfile -t ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest .
+          docker build --file=docker/sqltools/dockerfile -t ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest .
           docker push ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
