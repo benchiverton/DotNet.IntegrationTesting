@@ -1,0 +1,55 @@
+# escape=`
+
+# framework 4.8 image
+FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+# Install .NET Core SDK
+ENV DOTNET_CORE_VERSION 6.0.400
+
+RUN Invoke-WebRequest `
+        -UseBasicParsing `
+        -Uri https://dot.net/v1/dotnet-install.ps1 `
+        -OutFile dotnet-install.ps1 `
+        -Proxy $env:http_proxy; `
+    ./dotnet-install.ps1 `
+        -InstallDir '/Program Files/dotnet' `
+        -Version $env:DOTNET_CORE_VERSION `
+        -ProxyAddress $env:http_proxy; `
+    Remove-Item -Force dotnet-install.ps1;
+
+# Install VS Build Tools
+RUN Invoke-WebRequest `
+        -UseBasicParsing `
+        -Uri https://download.visualstudio.microsoft.com/download/pr/584a5fcf-dd07-4c36-add9-620e858c9a35/db7bb08710348d6aeade52a30d9bd0987cebb489fdea82c776416128e14eb69f/vs_BuildTools.exe `
+        -OutFile vs_buildtools.exe `
+        -Proxy $env:http_proxy; `
+    $process = Start-Process -FilePath vs_buildtools.exe `
+	    -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--installPath", """""""""C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools""""""""", `
+        "--add", "Microsoft.VisualStudio.Workload.DataBuildTools", `
+        "--add", "Microsoft.Net.Component.4.5.1.TargetingPack", `
+        "--add", "Microsoft.Net.Component.4.5.2.TargetingPack", `
+        "--add", "Microsoft.Net.Component.4.5.TargetingPack", `
+        "--add", "Microsoft.Net.Component.4.6.TargetingPack", `
+        "--add", "Microsoft.Net.ComponentGroup.TargetingPacks.Common", `
+        "--add", "Microsoft.VisualStudio.Component.Roslyn.Compiler", `
+        "--add", "Microsoft.VisualStudio.Component.Roslyn.LanguageServices", `
+        "--add", "Microsoft.VisualStudio.Component.SQL.SSDTBuildSku" `
+		-Wait -PassThru ; `
+    Remove-Item -Force vs_buildtools.exe;
+
+# Install DAC
+RUN Write-Host 'Downloading DACFX...'; `
+    Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/?linkid=2165211' -OutFile 'DacFramework.msi' -Proxy $env:http_proxy; `
+    Write-Host 'Installing ...'; `
+    Start-Process -Wait -Passthru -FilePath 'msiexec.exe' -ArgumentList '/qn /norestart /i DacFramework.msi'; `
+    Write-Host 'Removing ...'; `
+    Remove-Item DacFramework.msi -Force; `
+    Write-Host 'Complete.'
+
+ENV SQLDBExtensionsRefPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Microsoft\VisualStudio\v16.0\SSDT"
+ENV SSDTPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\Extensions\Microsoft\SQLDB\Dac\150"
+
+# We cannot use a short var for path due to windows env limitations, https://github.com/moby/moby/issues/30033
+ENV PATH="C:\\Windows\\system32;C:\\Windows;C:\\BuildTools\\MSBuild\\Current\\Bin;C:\\Program Files\\dotnet;C:\\Program Files\\powershell;C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin"

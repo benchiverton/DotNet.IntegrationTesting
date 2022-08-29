@@ -1,0 +1,42 @@
+name: Sqltools docker image build and publish
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docker/sqltools/**'
+  pull_request:
+    paths:
+      - 'docker/sqltools/**'
+
+jobs:
+  build-and-push-docker-image:
+    name: Build sqltools docker image and push to GitHub package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Github Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build image and push to GitHub Container Registry
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker/sqltools
+          tags: |
+            ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+          # build on feature branches, push only on main branch
+          push: ${{ github.ref == 'refs/heads/main' }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
