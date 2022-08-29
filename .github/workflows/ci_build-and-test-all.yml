@@ -12,8 +12,7 @@ on:
 jobs:
   build-and-test:
     runs-on: windows-2019
-    container:
-      image: ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+    container: ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
