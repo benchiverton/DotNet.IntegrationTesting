@@ -25,7 +25,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push image to Github Packages
+      - name: Build image
         run: |
           docker build --file=docker/sqltools/dockerfile -t ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest .
+
+      - name: Publish image
+        if: ${{ github.ref == 'ref/heads/main' }}
+        run: |
           docker push ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
