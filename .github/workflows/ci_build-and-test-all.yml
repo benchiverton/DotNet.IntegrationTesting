@@ -22,7 +22,11 @@ jobs:
       # - name: Install dependencies
       #   run: dotnet restore src/IntegrationTesting.sln
       - name: Test
-        run: docker run ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest dotnet test src/IntegrationTesting.sln
+        run: >-
+          docker run
+          --workdir src
+          ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+          dotnet test IntegrationTesting.sln
       # - name: Build
       #   run: dotnet build src/IntegrationTesting.sln --configuration Release --no-restore
       # - name: Test
