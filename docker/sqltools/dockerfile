@@ -6,25 +6,22 @@ FROM mcr.microsoft.com/dotnet/framework/sdk:4.8-windowsservercore-ltsc2019
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Install .NET Core SDK
-ENV DOTNET_CORE_VERSION 6.0.400
+ENV DOTNET_CORE_VERSION 5.0.400
 
 RUN Invoke-WebRequest `
         -UseBasicParsing `
         -Uri https://dot.net/v1/dotnet-install.ps1 `
-        -OutFile dotnet-install.ps1 `
-        -Proxy $env:http_proxy; `
+        -OutFile dotnet-install.ps1; `
     ./dotnet-install.ps1 `
         -InstallDir '/Program Files/dotnet' `
-        -Version $env:DOTNET_CORE_VERSION `
-        -ProxyAddress $env:http_proxy; `
+        -Version $env:DOTNET_CORE_VERSION; `
     Remove-Item -Force dotnet-install.ps1;
 
 # Install VS Build Tools
 RUN Invoke-WebRequest `
         -UseBasicParsing `
         -Uri https://download.visualstudio.microsoft.com/download/pr/584a5fcf-dd07-4c36-add9-620e858c9a35/db7bb08710348d6aeade52a30d9bd0987cebb489fdea82c776416128e14eb69f/vs_BuildTools.exe `
-        -OutFile vs_buildtools.exe `
-        -Proxy $env:http_proxy; `
+        -OutFile vs_buildtools.exe; `
     $process = Start-Process -FilePath vs_buildtools.exe `
 	    -ArgumentList "--quiet", "--wait", "--norestart", "--nocache", "--installPath", """""""""C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools""""""""", `
         "--add", "Microsoft.VisualStudio.Workload.DataBuildTools", `
@@ -41,7 +38,7 @@ RUN Invoke-WebRequest `
 
 # Install DAC
 RUN Write-Host 'Downloading DACFX...'; `
-    Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/?linkid=2165211' -OutFile 'DacFramework.msi' -Proxy $env:http_proxy; `
+    Invoke-WebRequest -Uri 'https://go.microsoft.com/fwlink/?linkid=2165211' -OutFile 'DacFramework.msi'; `
     Write-Host 'Installing ...'; `
     Start-Process -Wait -Passthru -FilePath 'msiexec.exe' -ArgumentList '/qn /norestart /i DacFramework.msi'; `
     Write-Host 'Removing ...'; `
