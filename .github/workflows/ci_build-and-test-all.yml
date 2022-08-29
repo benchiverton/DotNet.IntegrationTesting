@@ -20,6 +20,6 @@ jobs:
           docker run
           --name dotnet_test
           --workdir /src
-          --volume ${{ github.workspace }}\src:\src
+          --volume ${{ github.workspace }}\src:/src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
           dotnet test IntegrationTesting.sln
