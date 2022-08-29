@@ -15,27 +15,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      # - name: Setup .NET
-      #   uses: actions/setup-dotne t@v1
-      #   with:
-      #     dotnet-version: 6.0.400
-      # - name: Install dependencies
-      #   run: dotnet restore src/IntegrationTesting.sln
       - name: Test
         run: >-
           docker run
           --name dotnet_test
           --workdir /src
-          --volume ${{ github.workspace }}\src
+          --volume ${{ github.workspace }}/src:/src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
           dotnet test IntegrationTesting.sln
-      # - name: Build
-      #   run: dotnet build src/IntegrationTesting.sln --configuration Release --no-restore
-      # - name: Test
-      #   run: dotnet test src/IntegrationTesting.sln --no-build --verbosity normal
-
-  # publish-test-results:
-  #   uses: benchiverton/OnlineStore/.github/workflows/workflow-build-test-publish-dotnet.yml@main
-  #   with:
-  #     solution_file: "src/IntegrationTesting.sln"
-  #     dotnet_version: 6.0.400
