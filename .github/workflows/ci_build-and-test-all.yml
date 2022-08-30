@@ -32,4 +32,4 @@ jobs:
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dotnet build IntegrationTesting.sln --configuration Release
+          dotnet build **/*.csproj --configuration Release --no-dependencies
