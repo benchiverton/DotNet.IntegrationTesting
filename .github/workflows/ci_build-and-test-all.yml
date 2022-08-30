@@ -18,6 +18,7 @@ jobs:
       - name: Build database
         run: >-
           docker run
+          --rm
           --name dotnet_test
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
@@ -26,6 +27,7 @@ jobs:
       - name: Build applications
         run: >-
           docker run
+          --rm
           --name dotnet_test
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
