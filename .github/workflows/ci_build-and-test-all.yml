@@ -32,7 +32,7 @@ jobs:
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dir "*Tests.csproj" -Recurse | %{dotnet build  $PSItem.FullName --configuration Release}
+          powershell dir "*Tests.csproj" -Recurse | %{dotnet build  $PSItem.FullName --configuration Release}
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
