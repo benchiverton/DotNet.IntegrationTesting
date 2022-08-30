@@ -6,8 +6,8 @@ on:
       - 'src/**'
   pull_request:
     branches: [main]
-    # paths:
-    #   - 'src/**'
+    paths:
+      - 'src/**'
 
 jobs:
   build-and-test:
@@ -15,11 +15,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Test
+      - name: Build database
         run: >-
           docker run
           --name dotnet_test
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          msbuild IntegrationTesting.sln -p:Configuration=Release
+          msbuild Data/IntegrationTesting.Data.Sql/IntegrationTesting.Data.Sql.sqlproj -p:Configuration=Release
+      - name: Build applications
+        run: >-
+          docker run
+          --name dotnet_test
+          --workdir /src
+          --volume ${{ github.workspace }}\src:c:\src
+          ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+          dotnet build IntegrationTesting.sln --configuration Release
