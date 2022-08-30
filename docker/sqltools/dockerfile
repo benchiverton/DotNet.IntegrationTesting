@@ -49,4 +49,4 @@ ENV SSDTPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Com
 # We cannot use a short var for path due to windows env limitations, https://github.com/moby/moby/issues/30033
 ENV PATH="C:\\Windows\\system32;C:\\Windows;C:\\BuildTools\\MSBuild\\Current\\Bin;C:\\Program Files\\dotnet;C:\\Program Files\\powershell;C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin"
 
-CMD ["dotnet"]
+CMD ["dotnet", "msbuild"]
