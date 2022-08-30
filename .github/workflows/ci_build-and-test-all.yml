@@ -22,4 +22,4 @@ jobs:
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dotnet test IntegrationTesting.sln
+          msbuild IntegrationTesting.sln -p:Configuration=Release
