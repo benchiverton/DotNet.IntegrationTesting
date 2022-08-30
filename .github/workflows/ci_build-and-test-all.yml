@@ -19,17 +19,26 @@ jobs:
         run: >-
           docker run
           --rm
-          --name dotnet_test
+          --name dotnet_build
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
           msbuild Data/IntegrationTesting.Data.Sql/IntegrationTesting.Data.Sql.sqlproj -p:Configuration=Release
-      - name: Build applications
+      - name: Build application code
         run: >-
           docker run
           --rm
-          --name dotnet_test
+          --name dotnet_build
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dotnet build **/*.csproj --configuration Release --no-dependencies
+          dir "*.csproj" -Recurse | Where {$PSItem.FullName -notlike "*Tests.csproj"} | %{dotnet build  $PSItem.FullName --configuration Release}
+      - name: Build test code
+        run: >-
+          docker run
+          --rm
+          --name dotnet_build
+          --workdir /src
+          --volume ${{ github.workspace }}\src:c:\src
+          ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+          dir "*Tests.csproj" -Recurse | %{dotnet build  $PSItem.FullName --configuration Release --no-dependencies}
