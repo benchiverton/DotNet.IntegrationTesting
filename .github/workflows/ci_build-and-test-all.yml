@@ -32,7 +32,7 @@ jobs:
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dir "*.csproj" -Recurse | Where {$PSItem.FullName -notlike "*Tests.csproj"} | %{dotnet build  $PSItem.FullName --configuration Release}
+          powershell dir "*.csproj" -Recurse | Where {$PSItem.FullName -notlike "*Tests.csproj"} | %{dotnet build  $PSItem.FullName --configuration Release}
       - name: Build test code
         run: >-
           docker run
@@ -41,4 +41,4 @@ jobs:
           --workdir /src
           --volume ${{ github.workspace }}\src:c:\src
           ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
-          dir "*Tests.csproj" -Recurse | %{dotnet build  $PSItem.FullName --configuration Release --no-dependencies}
+          powershell dir "*Tests.csproj" -Recurse | %{dotnet build  $PSItem.FullName --configuration Release --no-dependencies}
