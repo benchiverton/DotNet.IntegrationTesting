@@ -43,7 +43,7 @@ RUN Write-Host 'Downloading DACFX...'; `
     Remove-Item DacFramework.msi -Force; `
     Write-Host 'Complete.'
 
-ENV SQLDBExtensionsRefPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Microsoft\VisualStudio\v16.0\SSDT"
+ENV SQLDBExtensionsRefPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Microsoft\VisualStudio\v17.0\SSDT"
 ENV SSDTPath="C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\Extensions\Microsoft\SQLDB\Dac\160"
 
 # We cannot use a short var for path due to windows env limitations, https://github.com/moby/moby/issues/30033
