@@ -53,4 +53,4 @@ jobs:
         with:
           dotnet-version: 6.0.400
       - name: Test
-        run: dotnet test Data/IntegrationTesting.Data.Tests/IntegrationTesting.Data.Tests.csproj --no-build --verbosity normal
+        run: dotnet test ${{ github.workspace }}/src/Data/IntegrationTesting.Data.Tests/IntegrationTesting.Data.Tests.csproj --no-build --verbosity normal
