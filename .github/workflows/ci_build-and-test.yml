@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-upload-dacpac
     env:
-      DOCKER_HOST: tcp://docker:2375
+      DOCKER_HOST: tcp://localhost:2375/
       DACPAC_LOCATION: ../../../../../../dacpac-download/IntegrationTesting.Data.Sql.dacpac
     steps:
       - name: Checkout
