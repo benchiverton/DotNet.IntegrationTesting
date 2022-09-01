@@ -35,7 +35,7 @@ jobs:
     needs: build-and-upload-dacpac
     env:
       DOCKER_HOST: tcp://docker:2375
-      DACPAC_LOCATION: dacpac-download/IntegrationTesting.Data.Sql.dacpac
+      DACPAC_LOCATION: ../../../../../../dacpac-download/IntegrationTesting.Data.Sql.dacpac
     steps:
       - name: Checkout
         uses: actions/checkout@v2
