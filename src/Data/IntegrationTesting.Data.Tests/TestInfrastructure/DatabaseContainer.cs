@@ -32,7 +32,12 @@ public class DatabaseContainer : IDisposable
         .Build();
         _testContainer.StartAsync().ContinueWith(e =>
         {
-            var dbPackage = DacPackage.Load("..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac");
+            var dbPackageLoc = Environment.GetEnvironmentVariable("DACPAC_LOCATION");
+            if (string.IsNullOrEmpty(dbPackageLoc))
+            {
+                dbPackageLoc = "..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac";
+            }
+            var dbPackage = DacPackage.Load(dbPackageLoc);
             var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}");
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);
