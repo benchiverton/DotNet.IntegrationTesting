@@ -56,5 +56,5 @@ jobs:
         if: success() || failure()
         with:
           name: DB Tests
-          path: artifacts/Data/IntegrationTesting.Data.Tests/TestResults/results.xml
+          path: src/Data/IntegrationTesting.Data.Tests/TestResults/results.xml
           reporter: dotnet-trx
