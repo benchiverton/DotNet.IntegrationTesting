@@ -20,16 +20,15 @@ public class DatabaseContainer : IDisposable
     public DatabaseContainer()
     {
         _testContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
-        .WithDatabase(new MsSqlTestcontainerConfiguration("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
-        {
-            Password = SaPassword
-        })
-        .WithExposedPort("1433")
-        .WithPortBinding(HostPort.ToString(), "1433")
-        .WithDockerEndpoint(Environment.GetEnvironmentVariable("DOCKER_HOST"))
-        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
-        .WithCleanUp(true)
-        .Build();
+            .WithDatabase(new MsSqlTestcontainerConfiguration("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
+            {
+                Password = SaPassword
+            })
+            .WithExposedPort("1433")
+            .WithPortBinding(HostPort.ToString(), "1433")
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
+            .WithCleanUp(true)
+            .Build();
         _testContainer.StartAsync().ContinueWith(e =>
         {
             var dbPackageLoc = Environment.GetEnvironmentVariable("DACPAC_LOCATION");
