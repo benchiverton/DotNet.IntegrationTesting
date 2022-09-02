@@ -26,6 +26,7 @@ public class DatabaseContainer : IDisposable
             })
             .WithExposedPort("1433")
             .WithPortBinding(HostPort.ToString(), "1433")
+            .AddDockerEndpoint()
             .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
             .WithCleanUp(true)
             .Build();
