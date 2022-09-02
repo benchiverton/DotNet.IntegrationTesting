@@ -1,0 +1,58 @@
+name: "Build and test"
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+
+jobs:
+  build-and-upload-dacpac:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build dacpac
+        run: >-
+          docker run
+          --rm
+          --name dotnet_build
+          --workdir /src
+          --volume ${{ github.workspace }}\src:c:\src
+          ghcr.io/benchiverton/dotnet.integrationtesting/sqltools:latest
+          msbuild Data/IntegrationTesting.Data.Sql/IntegrationTesting.Data.Sql.sqlproj -p:Configuration=Release
+      - name: Upload dacpac
+        uses: actions/upload-artifact@v3
+        with:
+          name: dacpac
+          path: src/Data/IntegrationTesting.Data.Sql/bin/Release/IntegrationTesting.Data.Sql.dacpac
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    needs: build-and-upload-dacpac
+    env:
+      DACPAC_LOCATION: ../../../../../../dacpac-download/IntegrationTesting.Data.Sql.dacpac
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Download dacpac
+        uses: actions/download-artifact@v3
+        with:
+          name: dacpac
+          path: dacpac-download/
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.400
+      - name: Test
+        run: dotnet test src/Data/IntegrationTesting.Data.Tests/IntegrationTesting.Data.Tests.csproj --configuration Release --verbosity normal --logger "trx;LogFileName=results.xml"
+      - name: Publish test report
+        uses: dorny/test-reporter@v1
+        if: success() || failure()
+        with:
+          name: DB Tests
+          path: src/Data/IntegrationTesting.Data.Tests/TestResults/results.xml
+          reporter: dotnet-trx

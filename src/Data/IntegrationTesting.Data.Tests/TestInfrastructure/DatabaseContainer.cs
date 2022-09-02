@@ -20,19 +20,24 @@ public class DatabaseContainer : IDisposable
     public DatabaseContainer()
     {
         _testContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
-        .WithDatabase(new MsSqlTestcontainerConfiguration("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
-        {
-            Password = SaPassword
-        })
-        .WithExposedPort("1433")
-        .WithPortBinding(HostPort.ToString(), "1433")
-        .WithDockerEndpoint(Environment.GetEnvironmentVariable("DOCKER_HOST"))
-        .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
-        .WithCleanUp(true)
-        .Build();
+            .WithDatabase(new MsSqlTestcontainerConfiguration("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
+            {
+                Password = SaPassword
+            })
+            .WithExposedPort("1433")
+            .WithPortBinding(HostPort.ToString(), "1433")
+            .AddDockerEndpoint()
+            .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
+            .WithCleanUp(true)
+            .Build();
         _testContainer.StartAsync().ContinueWith(e =>
         {
-            var dbPackage = DacPackage.Load("..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac");
+            var dbPackageLoc = Environment.GetEnvironmentVariable("DACPAC_LOCATION");
+            if (string.IsNullOrEmpty(dbPackageLoc))
+            {
+                dbPackageLoc = "..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac";
+            }
+            var dbPackage = DacPackage.Load(dbPackageLoc);
             var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}");
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);

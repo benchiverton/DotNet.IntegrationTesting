@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IntegrationTesting.Data.Sql\IntegrationTesting.Data.Sql.sqlproj" />
     <ProjectReference Include="..\IntegrationTesting.Data\IntegrationTesting.Data.csproj" />
   </ItemGroup>
 
