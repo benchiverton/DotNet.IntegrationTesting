@@ -6,7 +6,7 @@ Unit tests for code that has external dependencies in DotNet.
 
 | Area             | Details                                                    |
 | ---------------- | ---------------------------------------------------------- |
-| [Data](src/Data) | Unit testing app which ahs dependencies on SQL Server, etc |
+| [Data](#Data)    | Unit testing app which ahs dependencies on SQL Server, etc |
 | API (TODO)       | Unit testing API's with all dependencies                   |
 
 ## Build pipeline
