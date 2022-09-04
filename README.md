@@ -4,78 +4,42 @@ Unit tests for code that has external dependencies in DotNet.
 
 ## Areas covered
 
-| Area             | Details                                                    |
-| ---------------- | ---------------------------------------------------------- |
-| [Data](src/Data) | Unit testing app which ahs dependencies on SQL Server, etc |
-| API (TODO)       | Unit testing API's with all dependencies                   |
+| Area             | Details                                                        |
+| ---------------- | -------------------------------------------------------------- |
+| [Data](#data)    | Testing code which depends on SQL Server being available       |
+| [API](#api)      | Testing API code with concrete implementations of dependencies |
 
-## Build pipeline
+### [Data](src/Data/)
 
-(WIP) The build pipeline uses GitHub actions, and does not require any pre-requisites - the docker images used are public and have all of the external dependencies needed.
+TODO status badges
 
-## Pre-requisites
+This test project shows how you can effectively test your database code, including stored procedures, login/user access, data truncation, and pretty much any SQL Server feature you can think of.
 
-Pre-requisites for running tests locally. Tests 
+The interesting part of this test project is the [DatabaseContainer](src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/DatabaseContainer.cs) class. This class:
+1. Spins up a SQL Server container using [testcontainers-dotnet](https://github.com/testcontainers/testcontainers-dotnet),
+2. Deploys the latest SQL Server dacpac (build from the latest [sqlproj](src/Data/IntegrationTesting.Data.Sql/)) to the SQL Server container,
+3. Provides SQL connection strings for SQL logins that can be used to connect to the running SQL Server container.
 
-### Docker (Windows)
-1. Enable the Linux Subsystem feature (powershell, admin, may require restart)
-    ```powershell
-    Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-    ```
-1. Enable Hyper-V (powershell, admin, may require restart)
-    ```powershell
-    DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
-    bcdedit /set hypervisorlaunchtype auto
-    ```
-1. Download and install the latest Linux kernel update (https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi)
-1. Install WSL2 (powershell, admin, may require restart)
-    ```powershell
-    wsl --set-default-version 2
-    wsl --install -d Ubuntu
-    ```
-1.  Ensure your installed Ubunto is using WSL2, if not update it (powershell, admin)
-    ```powershell
-    wsl -l -v
-    wsl --set-version Ubuntu 2
-    ```
-1.  Install docker on your linux subsystem, either by following the steps on https://docs.docker.com/engine/install/ubuntu/. or by running the following commands on your ubunto console
-    ```powershell
-    wsl
-    ```
-    ```bash
-    #/bin/bash 
+Dependencies/downsides:
+* You must be able to access a docker endpoint (remote or local).
+* You must be able to complie sqlproj's (requires VS data build tools).
+* Container creation + dacpac deployment takes a while (~30 seconds). The impact of this can be reduced by using [Collection Fixtures](src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/DatabaseCollection.cs).
 
-    # 1. Required dependencies 
-    sudo apt-get update 
-    sudo apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release 
+### [API](src/Api/)
 
-    # 2. GPG key 
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+TODO
 
-    # 3. Use stable repository for Docker 
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu bionic stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+## Running the tests
 
-    # 4. Install Docker 
-    sudo apt-get update
-    sudo apt-get -y install docker-ce docker-ce-cli containerd.io 
+### CI/CD
 
-    # 5. Add user to docker group 
-    sudo groupadd docker 
-    sudo usermod -aG docker $USER
+The build pipeline uses GitHub actions. Any custom/non-public docker images used are built from the [docker](docker/) directory.
 
-    # 6. Configure daemon to expose itself via a tcp socker
-    sudo touch /etc/docker/daemon.json
-    echo '{ "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"] }' | sudo tee -a /etc/docker/daemon.json
-    ```
-1.  Start the docker service (todo - make docker auto-start)
-    ```powershell
-    wsl
-    ```
-    ```bash
-    sudo service docker start
-    ```
-1.  Open a new command window and verify that your instillation was successful by running the following (powershell)
-    ```powershell
-    wsl docker ps
-    ```
-1.  **Important** - ensure the `DOCKER_HOST` environment variable is set to your mapped TCP port, which will be `tcp://localhost:2375/`
+### Local
+
+Dependencies for running tests locally are as follows:
+* Access to a docker endpoint via one of the following
+  * Docker Desktop
+  * Access to a remote Docker endpoint (remember to set `DOCKER_HOST`!)
+  * Docker installed locally [follow these instructions if you're using windows!](docs/installing_docker_windows.md) (remember to set `DOCKER_HOST`!)
+* Visual Studio data build tools (to build .sqlproj's)
