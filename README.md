@@ -11,7 +11,7 @@ Unit tests for code that has external dependencies in DotNet.
 
 ### [Data](src/Data/)
 
-TODO status badges
+[![Data - build and test](https://github.com/benchiverton/DotNet.IntegrationTesting/actions/workflows/ci_build-and-test-data.yml/badge.svg)](https://github.com/benchiverton/DotNet.IntegrationTesting/actions/workflows/ci_build-and-test-data.yml)
 
 This test project shows how you can effectively test your database code, including stored procedures, login/user access, data truncation, and pretty much any SQL Server feature you can think of.
 
