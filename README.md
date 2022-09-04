@@ -17,10 +17,10 @@ This test project shows how you can effectively test your database code, includi
 
 The interesting part of this test project is the [DatabaseContainer](src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/DatabaseContainer.cs) class. This class:
 1. Spins up a SQL Server container using [testcontainers-dotnet](https://github.com/testcontainers/testcontainers-dotnet),
-2. Deploys the latest SQL Server dacpac (build from the projects [sqlproj](src/Data/IntegrationTesting.Data.Sql/)) to the test container,
-3. Provides SQL connection strings for SQL logins that can be used to connect to the running SQL Server instance.
+2. Deploys the latest SQL Server dacpac (build from the latest [sqlproj](src/Data/IntegrationTesting.Data.Sql/)) to the SQL Server container,
+3. Provides SQL connection strings for SQL logins that can be used to connect to the running SQL Server container.
 
-There are a few downsides to using this with your unit tests however:
+Dependencies/downsides:
 * You must be able to access a docker endpoint (remote or local).
 * You must be able to complie sqlproj's (requires VS data build tools).
 * Container creation + dacpac deployment takes a while (~30 seconds). The impact of this can be reduced by using [Collection Fixtures](src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/DatabaseCollection.cs).
