@@ -1,4 +1,7 @@
-# Installing Docker on windows without Docker Desktop
+# Installing Docker on Windows (without Docker Desktop!)
+I work mostly on the Windows OS, and I don't use Docker enough in my day to day to justify licensing Docker Desktop. Instead, I install Docker onto a Linux subsystem, and start the service there when I need to build images or run test infrastructure (eg SQL Server).
+
+## Instructions
 
 1. Enable the Linux Subsystem feature (powershell, admin, may require restart)
     ```powershell
@@ -60,4 +63,4 @@
     ```powershell
     wsl docker ps
     ```
-1.  **Important for the test projects** - ensure the `DOCKER_HOST` environment variable is set to your mapped TCP port, which will be `tcp://localhost:2375/`
+1.  **Required for DotNet.IntrgrationTesting** - ensure the `DOCKER_HOST` environment variable is set to your mapped TCP port, which will be `tcp://localhost:2375/`
