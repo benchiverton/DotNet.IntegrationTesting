@@ -48,7 +48,7 @@ I work mostly on the Windows OS, and I don't use Docker enough in my day to day 
     sudo groupadd docker 
     sudo usermod -aG docker $USER
 
-    # 6. Configure daemon to expose itself via a tcp socket
+    # 6. Configure daemon to expose it's API over tcp
     sudo touch /etc/docker/daemon.json
     echo '{ "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"] }' | sudo tee -a /etc/docker/daemon.json
     ```
