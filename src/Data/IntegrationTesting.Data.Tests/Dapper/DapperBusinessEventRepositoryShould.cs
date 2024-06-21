@@ -1,24 +1,23 @@
 using System;
 using System.Threading.Tasks;
 using FluentAssertions;
+using IntegrationTesting.Data.Dapper;
 using IntegrationTesting.Data.DTOs;
-using IntegrationTesting.Data.Repositories;
-using IntegrationTesting.Data.Tests.TestInfrastructure;
 using Xunit;
 
-namespace IntegrationTesting.Data.Tests.Repositories;
+namespace IntegrationTesting.Data.Tests.Dapper;
 
-[Collection("Database collection")]
+[Collection("Dapper Database collection")]
 public class DapperBusinessEventRepositoryShould
 {
-    private readonly DatabaseContainer _database;
+    private readonly DapperDatabaseContainer _dapperDatabase;
 
-    public DapperBusinessEventRepositoryShould(DatabaseContainer database) => _database = database;
+    public DapperBusinessEventRepositoryShould(DapperDatabaseContainer dapperDatabase) => _dapperDatabase = dapperDatabase;
 
     [Fact]
     public async Task PersistAndGetsRelatedBusinessEvents()
     {
-        var repository = new DapperBusinessEventRepository(_database.DomainLoginConnectionString);
+        var repository = new DapperBusinessEventRepository(_dapperDatabase.DomainLoginConnectionString);
         var businessEntityId = Guid.NewGuid();
         var firstBusinessEvent = new BusinessEvent(
             Guid.NewGuid(),
@@ -45,7 +44,7 @@ public class DapperBusinessEventRepositoryShould
     [Fact]
     public async Task PersistAndNotGetUnrelatedBusinessEvents()
     {
-        var repository = new DapperBusinessEventRepository(_database.DomainLoginConnectionString);
+        var repository = new DapperBusinessEventRepository(_dapperDatabase.DomainLoginConnectionString);
         var businessEntityId = Guid.NewGuid();
         var relatedBueinssEvent = new BusinessEvent(
             Guid.NewGuid(),

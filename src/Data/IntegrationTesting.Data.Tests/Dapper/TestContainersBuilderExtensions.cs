@@ -1,7 +1,7 @@
 using System;
 using DotNet.Testcontainers.Builders;
 
-namespace IntegrationTesting.Data.Tests.TestInfrastructure
+namespace IntegrationTesting.Data.Tests.Dapper
 {
     public static class TestContainersBuilderExtensions
     {

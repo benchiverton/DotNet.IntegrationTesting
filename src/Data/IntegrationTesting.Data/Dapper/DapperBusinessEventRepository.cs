@@ -6,7 +6,7 @@ using Dapper;
 using IntegrationTesting.Data.DTOs;
 using Microsoft.Data.SqlClient;
 
-namespace IntegrationTesting.Data.Repositories;
+namespace IntegrationTesting.Data.Dapper;
 
 public class DapperBusinessEventRepository : IBusinessEventRepository
 {

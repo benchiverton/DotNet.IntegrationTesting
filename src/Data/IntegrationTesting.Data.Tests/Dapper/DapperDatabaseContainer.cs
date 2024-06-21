@@ -3,9 +3,9 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
 using Microsoft.SqlServer.Dac;
 
-namespace IntegrationTesting.Data.Tests.TestInfrastructure;
+namespace IntegrationTesting.Data.Tests.Dapper;
 
-public class DatabaseContainer : IDisposable
+public class DapperDatabaseContainer : IDisposable
 {
     private static readonly int HostPort = Random.Shared.Next(49152, 52000);
     private static readonly string DatabaseName = "ApplicationDatabase";
@@ -16,7 +16,7 @@ public class DatabaseContainer : IDisposable
 
     private readonly IContainer _testContainer;
 
-    public DatabaseContainer()
+    public DapperDatabaseContainer()
     {
         _testContainer = new ContainerBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
@@ -28,6 +28,7 @@ public class DatabaseContainer : IDisposable
             .WithWaitStrategy(Wait.ForUnixContainer().UntilPortIsAvailable(1433))
             .WithCleanUp(true)
             .Build();
+
         _testContainer.StartAsync().ContinueWith(e =>
         {
             var dbPackageLoc = Environment.GetEnvironmentVariable("DACPAC_LOCATION");
@@ -36,7 +37,7 @@ public class DatabaseContainer : IDisposable
                 dbPackageLoc = "..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac";
             }
             var dbPackage = DacPackage.Load(dbPackageLoc);
-            var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}");
+            var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}; Encrypt=False");
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);
             dacServices.Deploy(dbPackage, DatabaseName, options: deployOptions);
