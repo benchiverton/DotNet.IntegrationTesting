@@ -14,8 +14,11 @@ public class EntityFrameworkBusinessEventRepository : IBusinessEventRepository
     public EntityFrameworkBusinessEventRepository(BusinessEventDbContext businessEventDbContext) =>
         _businessEventDbContext = businessEventDbContext;
 
-    public Task PersistBusinessEvent(BusinessEvent businessEvent) =>
-        _businessEventDbContext.AddAsync(businessEvent).AsTask();
+    public async Task PersistBusinessEvent(BusinessEvent businessEvent)
+    {
+        await _businessEventDbContext.AddAsync(businessEvent);
+        await _businessEventDbContext.SaveChangesAsync();
+    }
 
     public async Task<IEnumerable<BusinessEvent>> GetBusinessEventsByBusinessEntityId(Guid businessEntityId) =>
         await _businessEventDbContext.BusinessEvents.Where(be => be.BusinessEntityId == businessEntityId)
