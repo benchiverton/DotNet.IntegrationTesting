@@ -10,7 +10,6 @@ public class DapperDatabaseContainer : IDisposable
     private static readonly int HostPort = Random.Shared.Next(49152, 52000);
     private static readonly string DatabaseName = "ApplicationDatabase";
     private static readonly string SaLogin = "sa";
-    private static readonly string SaPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
     private static readonly string DomainLoginUsername = "DomainLogin";
     private static readonly string DomainLoginPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
 
