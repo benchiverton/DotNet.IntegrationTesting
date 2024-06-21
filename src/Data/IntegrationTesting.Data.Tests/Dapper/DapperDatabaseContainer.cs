@@ -19,9 +19,6 @@ public class DapperDatabaseContainer : IDisposable
     public DapperDatabaseContainer()
     {
         _testContainer = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
-            .WithEnvironment("ACCEPT_EULA", "true")
-            .WithEnvironment("SA_PASSWORD", SaPassword)
             .WithExposedPort("1433")
             .WithPortBinding(HostPort.ToString(), "1433")
             .AddDockerEndpoint()
@@ -37,7 +34,7 @@ public class DapperDatabaseContainer : IDisposable
                 dbPackageLoc = "..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac";
             }
             var dbPackage = DacPackage.Load(dbPackageLoc);
-            var dacServices = new DacServices($"Data Source=127.0.0.1,{HostPort}; User Id={SaLogin}; Password={SaPassword}; Encrypt=False");
+            var dacServices = new DacServices(_testContainer.GetConnectionString());
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);
             dacServices.Deploy(dbPackage, DatabaseName, options: deployOptions);
