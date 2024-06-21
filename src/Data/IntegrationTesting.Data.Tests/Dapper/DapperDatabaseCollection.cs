@@ -2,7 +2,7 @@ using Xunit;
 
 namespace IntegrationTesting.Data.Tests.Dapper;
 
-[CollectionDefinition("Database collection")]
+[CollectionDefinition("Dapper Database collection")]
 public class DapperDatabaseCollection : ICollectionFixture<DapperDatabaseContainer>
 {
     // This class has no code, and is never created. Its purpose is

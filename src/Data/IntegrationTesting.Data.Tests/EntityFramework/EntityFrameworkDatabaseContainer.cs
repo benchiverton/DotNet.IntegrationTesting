@@ -1,4 +1,7 @@
 using System.Threading.Tasks;
+using IntegrationTesting.Data.EntityFramework;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Testcontainers.MsSql;
 using Xunit;
 
@@ -8,9 +11,21 @@ public class EntityFrameworkDatabaseContainer : IAsyncLifetime
 {
     private readonly MsSqlContainer _msSqlContainer = new MsSqlBuilder().Build();
 
-    public Task InitializeAsync() => _msSqlContainer.StartAsync();
+    public async Task InitializeAsync()
+    {
+        await _msSqlContainer.StartAsync();
+        var connection = new SqlConnection(_msSqlContainer.GetConnectionString());
+        await connection.OpenAsync();
+        var options = new DbContextOptionsBuilder<BusinessEventDbContext>().UseSqlServer(connection).Options;
+        _businessEventDbContext = new BusinessEventDbContext(options);
+        await _businessEventDbContext.Database.EnsureCreatedAsync();
+    }
 
-    public Task DisposeAsync() => _msSqlContainer.DisposeAsync().AsTask();
+    public async Task DisposeAsync()
+    {
+        await _msSqlContainer.DisposeAsync();
+        await _businessEventDbContext.DisposeAsync();
+    }
 
-    // expose DB context?
+    public BusinessEventDbContext _businessEventDbContext;
 }
