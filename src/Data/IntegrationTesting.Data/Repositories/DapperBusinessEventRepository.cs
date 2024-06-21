@@ -8,17 +8,11 @@ using Microsoft.Data.SqlClient;
 
 namespace IntegrationTesting.Data.Repositories;
 
-public interface IBusinessEventRepository
-{
-    Task PersistBusinessEvent(BusinessEvent businessEvent);
-    Task<IEnumerable<BusinessEvent>> GetBusinessEventsByBusinessEntityId(Guid businessEntityId);
-}
-
-public class BusinessEventRepository : IBusinessEventRepository
+public class DapperBusinessEventRepository : IBusinessEventRepository
 {
     private readonly string _connectionString;
 
-    public BusinessEventRepository(string connectionString) => _connectionString = connectionString;
+    public DapperBusinessEventRepository(string connectionString) => _connectionString = connectionString;
 
     public async Task PersistBusinessEvent(BusinessEvent businessEvent)
     {

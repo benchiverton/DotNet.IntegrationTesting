@@ -18,7 +18,7 @@ public class BusinessEventRepositoryShould
     [Fact]
     public async Task PersistAndGetsRelatedBusinessEvents()
     {
-        var repository = new BusinessEventRepository(_database.DomainLoginConnectionString);
+        var repository = new DapperBusinessEventRepository(_database.DomainLoginConnectionString);
         var businessEntityId = Guid.NewGuid();
         var firstBusinessEvent = new BusinessEvent(
             Guid.NewGuid(),
@@ -45,7 +45,7 @@ public class BusinessEventRepositoryShould
     [Fact]
     public async Task PersistAndNotGetUnrelatedBusinessEvents()
     {
-        var repository = new BusinessEventRepository(_database.DomainLoginConnectionString);
+        var repository = new DapperBusinessEventRepository(_database.DomainLoginConnectionString);
         var businessEntityId = Guid.NewGuid();
         var relatedBueinssEvent = new BusinessEvent(
             Guid.NewGuid(),

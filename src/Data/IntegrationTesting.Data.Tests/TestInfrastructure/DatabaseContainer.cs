@@ -1,6 +1,5 @@
 using System;
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using Microsoft.SqlServer.Dac;
 
@@ -15,15 +14,14 @@ public class DatabaseContainer : IDisposable
     private static readonly string DomainLoginUsername = "DomainLogin";
     private static readonly string DomainLoginPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
 
-    private readonly TestcontainerDatabase _testContainer;
+    private readonly IContainer _testContainer;
 
     public DatabaseContainer()
     {
-        _testContainer = new TestcontainersBuilder<MsSqlTestcontainer>()
-            .WithDatabase(new MsSqlTestcontainerConfiguration("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
-            {
-                Password = SaPassword
-            })
+        _testContainer = new ContainerBuilder()
+            .WithImage("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
+            .WithEnvironment("ACCEPT_EULA", "true")
+            .WithEnvironment("SA_PASSWORD", SaPassword)
             .WithExposedPort("1433")
             .WithPortBinding(HostPort.ToString(), "1433")
             .AddDockerEndpoint()

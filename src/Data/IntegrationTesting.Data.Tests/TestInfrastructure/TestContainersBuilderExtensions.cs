@@ -1,14 +1,13 @@
 using System;
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
 
 namespace IntegrationTesting.Data.Tests.TestInfrastructure
 {
     public static class TestContainersBuilderExtensions
     {
-        public static ITestcontainersBuilder<MsSqlTestcontainer> AddDockerEndpoint(this ITestcontainersBuilder<MsSqlTestcontainer> testContainerBuilder)
+        public static ContainerBuilder AddDockerEndpoint(this ContainerBuilder testContainerBuilder)
         {
-            var dockerHost = Environment.GetEnvironmentVariable("DOCKER_HOST");
+            var dockerHost = Environment.GetEnvironmentVariable("tcp://localhost:2375/");
             if (!string.IsNullOrEmpty(dockerHost))
             {
                 testContainerBuilder.WithDockerEndpoint(dockerHost);
