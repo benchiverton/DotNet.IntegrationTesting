@@ -1,7 +1,7 @@
 using System;
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Containers;
 using Microsoft.SqlServer.Dac;
+using Testcontainers.MsSql;
 
 namespace IntegrationTesting.Data.Tests.Dapper;
 
@@ -14,11 +14,11 @@ public class DapperDatabaseContainer : IDisposable
     private static readonly string DomainLoginUsername = "DomainLogin";
     private static readonly string DomainLoginPassword = $"{Random.Shared.Next(100000000, 999999999)}aA!";
 
-    private readonly IContainer _testContainer;
+    private readonly MsSqlContainer _testContainer;
 
     public DapperDatabaseContainer()
     {
-        _testContainer = new ContainerBuilder()
+        _testContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2019-CU16-GDR1-ubuntu-20.04")
             .WithEnvironment("ACCEPT_EULA", "true")
             .WithEnvironment("SA_PASSWORD", SaPassword)
