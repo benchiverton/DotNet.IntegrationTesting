@@ -1,5 +1,6 @@
 using System;
 using DotNet.Testcontainers.Builders;
+using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Dac;
 using Testcontainers.MsSql;
 
@@ -33,7 +34,11 @@ public class DapperDatabaseContainer : IDisposable
                 dbPackageLoc = "..\\..\\..\\..\\IntegrationTesting.Data.Sql\\bin\\Debug\\IntegrationTesting.Data.Sql.dacpac";
             }
             var dbPackage = DacPackage.Load(dbPackageLoc);
-            var dacServices = new DacServices(_testContainer.GetConnectionString());
+            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder(_testContainer.GetConnectionString())
+            {
+                TrustServerCertificate = true
+            };
+            var dacServices = new DacServices(sqlConnectionStringBuilder.ConnectionString);
             var deployOptions = new DacDeployOptions();
             deployOptions.SqlCommandVariableValues.Add("DomainLoginPassword", DomainLoginPassword);
             dacServices.Deploy(dbPackage, DatabaseName, options: deployOptions);
