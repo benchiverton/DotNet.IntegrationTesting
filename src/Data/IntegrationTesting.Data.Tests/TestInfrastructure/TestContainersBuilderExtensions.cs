@@ -7,7 +7,7 @@ namespace IntegrationTesting.Data.Tests.TestInfrastructure
     {
         public static ContainerBuilder AddDockerEndpoint(this ContainerBuilder testContainerBuilder)
         {
-            var dockerHost = Environment.GetEnvironmentVariable("tcp://localhost:2375/");
+            var dockerHost = Environment.GetEnvironmentVariable("DOCKER_HOST");
             if (!string.IsNullOrEmpty(dockerHost))
             {
                 testContainerBuilder.WithDockerEndpoint(dockerHost);

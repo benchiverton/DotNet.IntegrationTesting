@@ -9,11 +9,11 @@ using Xunit;
 namespace IntegrationTesting.Data.Tests.Repositories;
 
 [Collection("Database collection")]
-public class BusinessEventRepositoryShould
+public class DapperBusinessEventRepositoryShould
 {
     private readonly DatabaseContainer _database;
 
-    public BusinessEventRepositoryShould(DatabaseContainer database) => _database = database;
+    public DapperBusinessEventRepositoryShould(DatabaseContainer database) => _database = database;
 
     [Fact]
     public async Task PersistAndGetsRelatedBusinessEvents()
