@@ -19,12 +19,20 @@ Run tests against a long-living test server
 ## Testcontainers
 This library lets you quickly spin up throwaway infrastructure such as SQL Server/Redis/etc in a container when tests are being run. This allows you to quickly validate that, for example, your repository implementation still works with your new stored procedure definition. I have a sample project using testcontainers you can read through here: https://benchiverton.github.io/Blog/project/TestContainers. The interesting classes in the solution are:
 
-[DatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/DatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
-
-[BusinessEventRepositoryShould](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/Repositories/BusinessEventRepositoryShould.cs), these are the tests using `DatabaseContainer` that verify the repository code is compatible with the SQL Server schema.
-
-### Testcontainers pre-requisites
+### Pre-requisites
 You only need access to a Docker-API compatible container runtime. If you use Windows you could install Docker Desktop, but I personally avoid licensed software where possible. Instead I opted to install docker on Windows Subsystem for Linux (WSL), and configure the daemon to expose it's API over TCP. For details on how to do this, please see [this guide](https://benchiverton.github.io/Blog/blogpage/InstallingDocker).
+
+### Dapper
+
+[DapperDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/Dapper/DapperDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
+
+[DapperBusinessEventRepositoryShould](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/Dapper/DapperBusinessEventRepositoryShould.cs), these are the tests using `DapperDatabaseContainer` that verify the repository code is compatible with the SQL Server schema.
+
+### Entity Framework
+
+[EntityFrameworkDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/EntityFramework/EntityFrameworkDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
+
+[EntityFrameworkBusinessEventRepositoryShould](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/EntityFramework/EntityFrameworkBusinessEventRepositoryShould.cs), these are the tests using `EntityFrameworkDatabaseContainer` that verify the repository code is compatible with the SQL Server schema.
 
 ## CICD with GitHub Actions
 Right now, Microsoft's support for sqlproj's is poor. They haven't been migrated sqlproj's to .NET Core, and the documentation for SQL Server Data Tools (SSDT) isn't as thorough as a lot of their other documentation. As a result, I've created some custom images that has the required toold to build a sqlproj installed. The CI pipeline I've created has the following workflows:
