@@ -17,7 +17,7 @@ public class EntityFrameworkBusinessEventRepositoryShould
     [Fact]
     public async Task PersistAndGetsRelatedBusinessEvents()
     {
-        var repository = new EntityFrameworkBusinessEventRepository(_efDatabase._businessEventDbContext);
+        var repository = new EntityFrameworkBusinessEventRepository(_efDatabase.BusinessEventDbContext);
 
         var businessEntityId = Guid.NewGuid();
         var firstBusinessEvent = new BusinessEvent(
@@ -45,7 +45,7 @@ public class EntityFrameworkBusinessEventRepositoryShould
     [Fact]
     public async Task PersistAndNotGetUnrelatedBusinessEvents()
     {
-        var repository = new EntityFrameworkBusinessEventRepository(_efDatabase._businessEventDbContext);
+        var repository = new EntityFrameworkBusinessEventRepository(_efDatabase.BusinessEventDbContext);
         var businessEntityId = Guid.NewGuid();
         var relatedBueinssEvent = new BusinessEvent(
             Guid.NewGuid(),

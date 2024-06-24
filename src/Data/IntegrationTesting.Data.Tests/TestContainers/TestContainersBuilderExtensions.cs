@@ -1,12 +1,10 @@
 using System;
 using DotNet.Testcontainers.Builders;
-using Testcontainers.MsSql;
-
-namespace IntegrationTesting.Data.Tests.Dapper
+namespace IntegrationTesting.Data.Tests.TestContainers
 {
     public static class TestContainersBuilderExtensions
     {
-        public static MsSqlBuilder AddDockerEndpoint(this MsSqlBuilder testContainerBuilder)
+        public static ContainerBuilder AddDockerEndpoint(this ContainerBuilder testContainerBuilder)
         {
             var dockerHost = Environment.GetEnvironmentVariable("DOCKER_HOST");
             if (!string.IsNullOrEmpty(dockerHost))
