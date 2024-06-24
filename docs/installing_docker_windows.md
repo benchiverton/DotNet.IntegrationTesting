@@ -59,7 +59,7 @@ I work mostly on the Windows OS, and I don't use Docker enough in my day to day 
     ```bash
     sudo service docker start
     ```
-1.  Open a new command window and verify that your instillation was successful by running the following (powershell)
+1.  Open a new command window and verify that your installation was successful by running the following (powershell)
     ```powershell
     wsl docker ps
     ```
