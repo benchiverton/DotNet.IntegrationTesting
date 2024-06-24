@@ -24,13 +24,13 @@ You only need access to a Docker-API compatible container runtime. If you use Wi
 
 ### Dapper
 
-[DapperDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/Dapper/DapperDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
+[DapperDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/Dapper/DapperDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
 
 [DapperBusinessEventRepositoryShould](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/Dapper/DapperBusinessEventRepositoryShould.cs), these are the tests using `DapperDatabaseContainer` that verify the repository code is compatible with the SQL Server schema.
 
 ### Entity Framework
 
-[EntityFrameworkDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/TestInfrastructure/EntityFramework/EntityFrameworkDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
+[EntityFrameworkDatabaseContainer](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/EntityFramework/EntityFrameworkDatabaseContainer.cs), this is what manages the Docker containers running SQL Server.
 
 [EntityFrameworkBusinessEventRepositoryShould](https://github.com/benchiverton/DotNet.IntegrationTesting/blob/main/src/Data/IntegrationTesting.Data.Tests/EntityFramework/EntityFrameworkBusinessEventRepositoryShould.cs), these are the tests using `EntityFrameworkDatabaseContainer` that verify the repository code is compatible with the SQL Server schema.
 
