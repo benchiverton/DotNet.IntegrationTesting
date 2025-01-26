@@ -7,8 +7,7 @@ using Xunit;
 
 namespace IntegrationTesting.Data.Tests.EntityFramework;
 
-[Collection("Entity Framework Database collection")]
-public class EntityFrameworkBusinessEventRepositoryShould
+public class EntityFrameworkBusinessEventRepositoryShould : IClassFixture<EntityFrameworkDatabaseContainer>
 {
     private readonly EntityFrameworkDatabaseContainer _efDatabase;
 

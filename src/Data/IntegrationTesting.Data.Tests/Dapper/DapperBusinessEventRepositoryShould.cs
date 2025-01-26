@@ -7,8 +7,7 @@ using Xunit;
 
 namespace IntegrationTesting.Data.Tests.Dapper;
 
-[Collection("Dapper Database collection")]
-public class DapperBusinessEventRepositoryShould
+public class DapperBusinessEventRepositoryShould : IClassFixture<DapperDatabaseContainer>
 {
     private readonly DapperDatabaseContainer _dapperDatabase;
 
